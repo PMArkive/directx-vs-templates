@@ -1,5 +1,9 @@
 cmake_minimum_required (VERSION 3.21)
 
+if(POLICY CMP0162)
+   cmake_policy(SET CMP0162 NEW)
+endif()
+
 project(CMakeDirect3D12Game
   DESCRIPTION "CMake example for Direct3D 12 Game (Win32)"
   LANGUAGES CXX
@@ -19,13 +23,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 include(CompilerAndLinker.cmake)
 
-add_executable(${PROJECT_NAME} WIN32
-    Game.cpp
-    Game.h
-    Main.cpp
-    StepTimer.h
-    pch.h
-    d3dx12.h
+add_executable(${PROJECT_NAME} WIN32)
+
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        Game.cpp
+        Game.h
+        Main.cpp
+        StepTimer.h
+        pch.h
+        d3dx12.h
 )
 
 if(NOT MINGW)

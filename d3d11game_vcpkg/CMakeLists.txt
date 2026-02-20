@@ -1,5 +1,9 @@
 cmake_minimum_required (VERSION 3.21)
 
+if(POLICY CMP0162)
+   cmake_policy(SET CMP0162 NEW)
+endif()
+
 project (CMakeDirect3DGameVCPKG
   DESCRIPTION "CMake example for Direct3D 11 Game (Win32) w/ DeviceResources using VCPKG"
   LANGUAGES CXX
@@ -19,14 +23,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 include(CompilerAndLinker.cmake)
 
-add_executable(${PROJECT_NAME} WIN32
-    Game.cpp
-    Game.h
-    DeviceResources.cpp
-    DeviceResources.h
-    Main.cpp
-    StepTimer.h
-    pch.h
+add_executable(${PROJECT_NAME} WIN32)
+
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        Game.cpp
+        Game.h
+        DeviceResources.cpp
+        DeviceResources.h
+        Main.cpp
+        StepTimer.h
+        pch.h
 )
 
 if(NOT MINGW)

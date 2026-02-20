@@ -1,5 +1,9 @@
 cmake_minimum_required (VERSION 3.21)
 
+if(POLICY CMP0162)
+   cmake_policy(SET CMP0162 NEW)
+endif()
+
 project(CMakeDirect3D12Game
   DESCRIPTION "CMake example for Direct3D 12 Game (UWP)"
   LANGUAGES CXX
@@ -23,13 +27,16 @@ if(NOT WINDOWS_STORE)
     message(FATAL_ERROR "ERROR: Must be built for WindowsStore")
 endif()
 
-add_executable(${PROJECT_NAME} WIN32
-    Game.cpp
-    Game.h
-    Main.cpp
-    StepTimer.h
-    pch.h
-    d3dx12.h
+add_executable(${PROJECT_NAME} WIN32)
+
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        Game.cpp
+        Game.h
+        Main.cpp
+        StepTimer.h
+        pch.h
+        d3dx12.h
 )
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE pch.h)
